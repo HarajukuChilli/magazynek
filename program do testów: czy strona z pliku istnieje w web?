@@ -1,0 +1,24 @@
+#plik służy do weryfikacji które strony internetowe zawarte w pliku istnieją/ są prawidłowe
+import requests
+pagelist = []
+
+with open("file.txt", "r", encoding="UTF=8") as file:
+    pagelist = (file.read().split("\n"))
+
+def check_site (site): 
+    try:
+        x = requests.get(site)
+        if responde.status_code==200:
+            return True
+        else:
+            return False
+    except requests.exceptions.ConnectionError:
+            return False
+
+with open("dzialajace_strony.txt", "w", encoding="UTF=8") as file2:
+    for site in pagelist:
+        if check_site (site)is True:
+            print(site, "- działa prawidłowo")
+            file2.write(site + "\n")
+        else:
+            print(site, "- nie działa prawidłowo")
