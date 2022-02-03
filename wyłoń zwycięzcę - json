@@ -1,0 +1,31 @@
+#program wyłaniający zwycięzcę (największa ilośc ukończonych zadań) spośród danych udostępnionych w jsonholder
+
+
+import requests
+import json
+r = requests.get("https://jsonplaceholder.typicode.com/todos")
+
+def completed_task_counter(tasks):
+    completedTask = dict()
+    for entry in tasks:
+        if entry["completed"] == True:
+            try:
+                completedTask[entry["userId"]] +=1
+            except KeyError:
+                completedTask[entry["userId"]] = 1
+    return completedTask
+
+def winner(user_value):
+    winners = []
+    maxValue = max(user_value.values())
+    print("najwyższy wynik to: ", maxValue)
+    for user,user_value in user_value.items():
+        if user_value == maxValue:  
+             print("gratulacje użytkowniku nr: ", user)
+
+try:
+    tasks = r.json()
+except json.decoder.JSONcodeError:
+    print("Niepoprawny format")
+else:
+    winner(completed_task_counter(tasks))
