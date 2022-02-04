@@ -1,9 +1,14 @@
 #program wyłaniający zwycięzcę (największa ilośc ukończonych zadań) spośród danych udostępnionych w jsonholder
+#EDIT: zaczytuje imię zwyciezcy z innego pliku
 
 
 import requests
 import json
 r = requests.get("https://jsonplaceholder.typicode.com/todos")
+s = requests.get("https://jsonplaceholder.typicode.com/users")
+
+tasks = r.json()
+users = s.json()
 
 def completed_task_counter(tasks):
     completedTask = dict()
@@ -20,9 +25,11 @@ def winner(user_value):
     maxValue = max(user_value.values())
     print("najwyższy wynik to: ", maxValue)
     for user,user_value in user_value.items():
-        if user_value == maxValue:  
-             print("gratulacje użytkowniku nr: ", user)
-
+        if user_value == maxValue:
+            winners.append(user)
+    for userData in users:
+       if (userData["id"] in winners):
+        print("gratulacje dla użytkownika: ", userData["name"])
 try:
     tasks = r.json()
 except json.decoder.JSONcodeError:
