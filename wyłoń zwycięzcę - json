@@ -20,7 +20,7 @@ def completed_task_counter(tasks):
                 completedTask[entry["userId"]] = 1
     return completedTask
 
-def winner(user_value):
+def get_winner(user_value):
     winners = []
     maxValue = max(user_value.values())
     print("najwyższy wynik to: ", maxValue)
@@ -35,4 +35,4 @@ try:
 except json.decoder.JSONcodeError:
     print("Niepoprawny format")
 else:
-    winner(completed_task_counter(tasks))
+    get_winner(completed_task_counter(tasks))
